@@ -6,15 +6,15 @@ import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.support.WebExchangeBindException;
 
 @ControllerAdvice
 public class GlobalErrorHandler {
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException ex) {
+    @ExceptionHandler(WebExchangeBindException.class)
+    public ResponseEntity<Map<String, String>> handleValidationExceptions(WebExchangeBindException ex) {
         
         Map<String, String> errorMap = new HashMap<>();
         ex.getBindingResult().getAllErrors().forEach((error) -> {
@@ -31,5 +31,11 @@ public class GlobalErrorHandler {
         
         // 400 Bad request
         return new ResponseEntity<>(errorMap, HttpStatus.BAD_REQUEST); 
+    }
+    
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<String> handleServiceValidationExceptions(IllegalArgumentException ex) {
+        // 400 Bad Request
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 }
