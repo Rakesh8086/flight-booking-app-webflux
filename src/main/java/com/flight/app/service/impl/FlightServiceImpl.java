@@ -50,5 +50,16 @@ public class FlightServiceImpl implements FlightService {
             .flatMap(flightRepository::save)
             .map(savedFlight -> savedFlight.getId());
     }
+    
+    @Override
+    public Flux<Flight> searchFlights(String fromPlace, String toPlace, LocalDate scheduleDate) {
+ 
+        return flightRepository.findByFromPlaceAndToPlaceAndScheduleDateAndAvailableSeatsGreaterThan(
+                fromPlace,
+                toPlace,
+                scheduleDate,
+                0 // flights with 1 or more available seats
+        );
+    }
 
 }

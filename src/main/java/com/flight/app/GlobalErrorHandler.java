@@ -9,6 +9,8 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.support.WebExchangeBindException;
+import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.server.ResponseStatusException;
 
 @ControllerAdvice
 public class GlobalErrorHandler {
@@ -37,5 +39,11 @@ public class GlobalErrorHandler {
     public ResponseEntity<String> handleServiceValidationExceptions(IllegalArgumentException ex) {
         // 400 Bad Request
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+    
+    @ExceptionHandler(ResponseStatusException.class)
+    public ResponseEntity<Object> handleResponseStatusException(ResponseStatusException ex, WebClient request) {
+        // Return a reason for the exception
+        return new ResponseEntity<>(ex.getReason(), ex.getStatusCode());
     }
 }
