@@ -13,6 +13,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.flight.app.dto.FlightSearchRequest;
 import com.flight.app.entity.Flight;
+import com.flight.app.exception.ResourceNotFoundException;
 import com.flight.app.service.FlightService;
 
 import jakarta.validation.Valid;
@@ -53,9 +54,8 @@ public class FlightController {
                 .collectList()
                 .flatMap(flights -> {
                     if (flights.isEmpty()) {
-                        return Mono.error(new ResponseStatusException(
-                                HttpStatus.NOT_FOUND,
-                                "No flights found matching the criteria"
+                        return Mono.error(new ResourceNotFoundException(
+                        		"No flights found matching the criteria"
                         ));
                     }
                     return Mono.just(new ResponseEntity<>(flights, HttpStatus.OK));

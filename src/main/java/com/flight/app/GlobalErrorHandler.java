@@ -12,6 +12,10 @@ import org.springframework.web.bind.support.WebExchangeBindException;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.flight.app.exception.ResourceNotFoundException;
+
+import reactor.core.publisher.Mono;
+
 @ControllerAdvice
 public class GlobalErrorHandler {
 
@@ -41,9 +45,9 @@ public class GlobalErrorHandler {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
     
-    @ExceptionHandler(ResponseStatusException.class)
-    public ResponseEntity<Object> handleResponseStatusException(ResponseStatusException ex, WebClient request) {
-        // Return a reason for the exception
-        return new ResponseEntity<>(ex.getReason(), ex.getStatusCode());
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public Mono<ResponseEntity<String>> handleResourceNotFoundException(ResourceNotFoundException ex) {
+    	// 404 Not Found
+    	return Mono.just(new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND));
     }
 }
