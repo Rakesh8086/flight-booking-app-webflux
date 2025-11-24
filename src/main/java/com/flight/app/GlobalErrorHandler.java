@@ -12,6 +12,7 @@ import org.springframework.web.bind.support.WebExchangeBindException;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.flight.app.exception.CancellationNotPossibleException;
 import com.flight.app.exception.FlightUnavailableException;
 import com.flight.app.exception.ResourceNotFoundException;
 
@@ -54,6 +55,11 @@ public class GlobalErrorHandler {
     
     @ExceptionHandler(FlightUnavailableException.class)
     public ResponseEntity<String> handleFlightUnavailableException(FlightUnavailableException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+    
+    @ExceptionHandler(CancellationNotPossibleException.class)
+    public ResponseEntity<String> handleCancellationNotPossibleException(CancellationNotPossibleException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 }

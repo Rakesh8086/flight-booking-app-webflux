@@ -79,4 +79,12 @@ public class BookingController {
 
     	return bookingService.getBookingHistoryByEmail(emailId);
     }
+    
+    @DeleteMapping("/booking/cancel/{pnr}")
+    public Mono<ResponseEntity<String>> cancelTicket(@PathVariable String pnr) {
+                return bookingService.cancelTicket(pnr)
+                // thenReturn() switches from Mono<Void> to Mono<String>
+                .thenReturn("Ticket with PNR " + pnr + " cancelled successfully.")
+                .map(message -> new ResponseEntity<>(message, HttpStatus.OK));
+    }
 }
