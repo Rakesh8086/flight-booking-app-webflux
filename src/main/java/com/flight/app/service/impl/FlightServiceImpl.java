@@ -65,5 +65,11 @@ public class FlightServiceImpl implements FlightService {
     public Mono<Flight> getFlightById(String flightId) {
         return flightRepository.findById(flightId);
     }
-
+    
+    @Override
+    public Mono<String> updateFlightInventory(Flight flight) {
+        return flightRepository.save(flight)
+            .map(savedFlight -> "Flight inventory updated for ID: " + savedFlight.getId())
+            .onErrorResume(e -> Mono.just("Flight inventory update failed: " + e.getMessage()));
+    }
 }

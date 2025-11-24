@@ -12,5 +12,6 @@ public interface FlightService {
     Flux<Flight> searchFlights(String fromPlace, String toPlace, LocalDate scheduleDate);
     
     Mono<Flight> getFlightById(String flightId); 
-
+    
+    Mono<String> updateFlightInventory(Flight flight);
 }
