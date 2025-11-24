@@ -25,8 +25,8 @@ public class GlobalErrorHandler {
         Map<String, String> errorMap = new HashMap<>();
         ex.getBindingResult().getAllErrors().forEach((error) -> {
             String fieldName;
-            if(error instanceof FieldError) {
-                fieldName = ((FieldError) error).getField();
+            if(error instanceof FieldError fieldError) {
+                fieldName = fieldError.getField();
             } 
             else {
                 fieldName = error.getObjectName(); 

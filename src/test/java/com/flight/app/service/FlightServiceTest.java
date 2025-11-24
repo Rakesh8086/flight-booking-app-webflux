@@ -21,7 +21,7 @@ import java.time.LocalTime;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class FlightServiceTest {
+class FlightServiceTest {
 
     @Mock
     private FlightRepository flightRepository;
