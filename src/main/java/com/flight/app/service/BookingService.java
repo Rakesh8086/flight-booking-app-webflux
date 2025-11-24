@@ -7,4 +7,5 @@ public interface BookingService {
 
     Mono<String> bookTicket(String flightId, Booking booking); 
     
+    Mono<Booking> getTicketByPnr(String pnr);
 }

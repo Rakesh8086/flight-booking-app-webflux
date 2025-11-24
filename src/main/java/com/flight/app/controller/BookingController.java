@@ -66,4 +66,10 @@ public class BookingController {
         
         return passenger;
     }
+    
+    @GetMapping("/ticket/{pnr}")
+    public Mono<Booking> getTicketByPnr(@PathVariable String pnr) {
+    	
+        return bookingService.getTicketByPnr(pnr);
+    }
 }

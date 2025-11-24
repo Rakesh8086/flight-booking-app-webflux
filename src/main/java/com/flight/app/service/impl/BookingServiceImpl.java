@@ -68,4 +68,12 @@ public class BookingServiceImpl implements BookingService {
                 return bookingRepository.save(requestBooking).map(Booking::getPnr);
             });
     }
+    
+    @Override
+    public Mono<Booking> getTicketByPnr(String pnr) {
+        return bookingRepository.findByPnr(pnr)
+            .switchIfEmpty(Mono.error(new ResourceNotFoundException(
+            		"Ticket with PNR " + pnr + " not found."
+            		)));
+    }
 }
