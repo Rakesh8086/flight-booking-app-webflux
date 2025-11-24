@@ -53,13 +53,17 @@ public class FlightServiceImpl implements FlightService {
     
     @Override
     public Flux<Flight> searchFlights(String fromPlace, String toPlace, LocalDate scheduleDate) {
- 
         return flightRepository.findByFromPlaceAndToPlaceAndScheduleDateAndAvailableSeatsGreaterThan(
                 fromPlace,
                 toPlace,
                 scheduleDate,
                 0 // flights with 1 or more available seats
         );
+    }
+    
+    @Override
+    public Mono<Flight> getFlightById(String flightId) {
+        return flightRepository.findById(flightId);
     }
 
 }

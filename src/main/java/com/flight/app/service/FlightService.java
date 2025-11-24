@@ -10,4 +10,7 @@ public interface FlightService {
     Mono<String> addFlight(Flight flight);
     
     Flux<Flight> searchFlights(String fromPlace, String toPlace, LocalDate scheduleDate);
+    
+    Mono<Flight> getFlightById(String flightId); 
+
 }
