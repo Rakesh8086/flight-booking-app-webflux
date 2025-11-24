@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.flight.app.entity.Booking;
+import com.flight.app.exception.ResourceNotFoundException;
 import com.flight.app.repository.BookingRepository;
 import com.flight.app.service.BookingService;
 import com.flight.app.service.FlightService;
@@ -32,7 +33,7 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public Mono<String> bookTicket(String flightId, Booking requestBooking) {
         return flightService.getFlightById(flightId)
-            .switchIfEmpty(Mono.error(new RuntimeException("Flight with ID " + flightId + " not found.")))
+            .switchIfEmpty(Mono.error(new ResourceNotFoundException("Flight with ID " + flightId + " not found.")))
             // check if seats available 
             .flatMap(flight -> {
                 int seatsToBook = requestBooking.getPassengers().size();
@@ -41,7 +42,7 @@ public class BookingServiceImpl implements BookingService {
                 }
                 Integer currentAvailableSeats = flight.getAvailableSeats();              
                 if(currentAvailableSeats < seatsToBook) {
-                    return Mono.error(new RuntimeException(
+                    return Mono.error(new ResourceNotFoundException(
                            "Insufficient seats. Only " + currentAvailableSeats + " seats Available"));
                 }
 
