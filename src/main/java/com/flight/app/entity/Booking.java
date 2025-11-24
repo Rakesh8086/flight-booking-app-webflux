@@ -33,7 +33,7 @@ public class Booking {
     private String userEmail;
     
     @NotBlank(message = "Mobile number is required.")
-    @Pattern(regexp = "^[0-9]{10}$", message = "Mobile number must be 10 digits.")
+    @Pattern(regexp = "^\\d{10}$", message = "Mobile number must be 10 digits.")
     private String mobileNumber;
     
     @NotNull(message = "Booking date is required.")

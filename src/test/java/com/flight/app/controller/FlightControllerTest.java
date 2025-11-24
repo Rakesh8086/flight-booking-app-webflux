@@ -32,12 +32,12 @@ class FlightControllerTest {
     private Flight testFlight1;
     private FlightSearchRequest validSearchRequest;
     private final LocalDate testDate = LocalDate.now().plusDays(7);
-    private final String BASE_URI = "/api/v1.0/flight";
+    private final String baseURI = "/api/v1.0/flight";
 
     @BeforeEach
     void setup() {
         this.webTestClient = WebTestClient.bindToServer()
-                .baseUrl("http://localhost:" + port + BASE_URI)
+                .baseUrl("http://localhost:" + port + baseURI)
                 .build();
         
         flightRepository.deleteAll().block();

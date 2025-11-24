@@ -21,7 +21,7 @@ public class BookingRequest {
     private String userEmail;
     
     @NotBlank
-    @Pattern(regexp = "^[0-9]{10}$", message = "Mobile number must be 10 digits.")
+    @Pattern(regexp = "^\\d{10}$", message = "Mobile number must be 10 digits.")
     private String mobileNumber; 
 
     @NotNull

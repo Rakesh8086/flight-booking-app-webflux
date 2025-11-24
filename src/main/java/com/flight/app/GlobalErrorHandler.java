@@ -9,8 +9,6 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.support.WebExchangeBindException;
-import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.server.ResponseStatusException;
 
 import com.flight.app.exception.CancellationNotPossibleException;
 import com.flight.app.exception.FlightUnavailableException;
@@ -27,7 +25,7 @@ public class GlobalErrorHandler {
         Map<String, String> errorMap = new HashMap<>();
         ex.getBindingResult().getAllErrors().forEach((error) -> {
             String fieldName;
-            if (error instanceof FieldError) {
+            if(error instanceof FieldError) {
                 fieldName = ((FieldError) error).getField();
             } 
             else {

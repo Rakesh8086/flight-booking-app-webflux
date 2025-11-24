@@ -10,7 +10,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.flight.app.entity.Booking;
 import com.flight.app.entity.Flight;
 import com.flight.app.entity.Passenger;
-import com.flight.app.exception.CancellationNotPossibleException;
 import com.flight.app.exception.FlightUnavailableException;
 import com.flight.app.exception.ResourceNotFoundException;
 import com.flight.app.repository.BookingRepository;
@@ -22,7 +21,6 @@ import reactor.test.StepVerifier;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.mockito.Mockito.*;
