@@ -13,6 +13,7 @@ import com.flight.app.entity.Booking;
 import com.flight.app.entity.Passenger;
 import com.flight.app.service.BookingService;
 
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
@@ -71,5 +72,11 @@ public class BookingController {
     public Mono<Booking> getTicketByPnr(@PathVariable String pnr) {
     	
         return bookingService.getTicketByPnr(pnr);
+    }
+    
+    @GetMapping("/booking/history/{emailId}")
+    public Flux<Booking> getBookingHistoryByEmail(@PathVariable String emailId) {
+
+    	return bookingService.getBookingHistoryByEmail(emailId);
     }
 }

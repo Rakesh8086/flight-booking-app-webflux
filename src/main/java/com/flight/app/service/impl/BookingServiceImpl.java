@@ -9,6 +9,7 @@ import com.flight.app.repository.BookingRepository;
 import com.flight.app.service.BookingService;
 import com.flight.app.service.FlightService;
 
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
@@ -71,9 +72,11 @@ public class BookingServiceImpl implements BookingService {
     
     @Override
     public Mono<Booking> getTicketByPnr(String pnr) {
-        return bookingRepository.findByPnr(pnr)
-            .switchIfEmpty(Mono.error(new ResourceNotFoundException(
-            		"Ticket with PNR " + pnr + " not found."
-            		)));
+        return bookingRepository.findByPnr(pnr);
+    }
+    
+    @Override
+    public Flux<Booking> getBookingHistoryByEmail(String emailId) {
+        return bookingRepository.findByUserEmailOrderByBookingDateDesc(emailId);
     }
 }
